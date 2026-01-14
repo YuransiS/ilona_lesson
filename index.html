@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Як знайти внутрішню опору | Безкоштовне відео</title>
+    
+    <!-- Подключение Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Шрифты Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Иконки FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Настройка стилей Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-bg': '#FDFBF7', // Очень светлый бежевый фон
+                        'brand-accent': '#D4A373', // Золотисто-бежевый
+                        'brand-dark': '#2C2520', // Темный шоколад для текста
+                        'brand-light': '#FAEDCD',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .btn-glow { position: relative; overflow: hidden; }
+        .btn-glow::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        .btn-glow:hover::after { left: 100%; transition: 0.7s ease-in-out; }
+
+        /* Скрытие скроллбара, но сохранение функционала */
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-dark font-sans antialiased overflow-x-hidden">
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center py-12 lg:py-0 overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-brand-light/30 rounded-l-[100px] -z-10 hidden lg:block"></div>
+
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-20">
+                
+                <div class="w-full lg:w-1/2 text-center lg:text-left fade-in-section">
+                    <span class="inline-block py-1 px-4 border border-brand-accent/50 rounded-full text-brand-accent text-sm tracking-widest uppercase mb-6">Безкоштовний урок</span>
+                    
+                    <h1 class="font-serif text-3xl lg:text-5xl leading-tight mb-6">
+                        Як перейти зі стану тривоги, сумнівів і самознецінення у стан жінки, <span class="text-brand-accent italic">яку люблять, чують і обирають?</span>
+                    </h1>
+                    
+                    <p class="text-xl lg:text-2xl text-gray-600 mb-8 font-light">Всього за 1 відео</p>
+
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Отримай доступ до безкоштовного відео, де я розкрию реальний шлях до внутрішньої опори, жіночої легкості та стосунків, де тебе цінують.
+                    </p>
+
+                    <button onclick="openModal()" class="btn-glow bg-brand-dark text-white px-8 py-4 rounded-full text-lg font-medium shadow-xl hover:shadow-2xl hover:bg-black transition-all duration-300 transform hover:-translate-y-1">
+                        Отримати доступ до відео
+                    </button>
+
+                    <div class="mt-6 flex items-center justify-center lg:justify-start gap-2 text-sm text-gray-500">
+                        <i class="fas fa-lock text-brand-accent"></i>
+                        <span>Відео відкриється одразу після введення даних</span>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 flex justify-center fade-in-section delay-200">
+                    <div class="relative">
+                        <div class="absolute inset-0 border-2 border-brand-accent/30 rounded-[50px] transform translate-x-4 translate-y-4"></div>
+                        <img src="IMG_9299.JPG" 
+                             onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=988&auto=format&fit=crop'" 
+                             alt="Ілона" 
+                             class="relative rounded-[50px] shadow-2xl w-full max-w-md object-cover h-[500px] lg:h-[600px] z-10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Block -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 lg:px-12">
+            <h2 class="font-serif text-3xl lg:text-4xl text-center mb-16 fade-in-section">Що ви отримаєте у відео?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-brand-bg p-8 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section">
+                    <div class="w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center mb-6 text-brand-accent text-xl"><i class="fas fa-unlock"></i></div>
+                    <p class="text-gray-700 font-medium">Чому ти застрягла у стані тривоги і самознецінення, і що насправді блокує зміни.</p>
+                </div>
+                <div class="bg-brand-bg p-8 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section">
+                    <div class="w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center mb-6 text-brand-accent text-xl"><i class="fas fa-exclamation-triangle"></i></div>
+                    <p class="text-gray-700 font-medium">3 головні помилки, які руйнують твою жіночу енергію та відштовхують чоловіків.</p>
+                </div>
+                <div class="bg-brand-bg p-8 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section">
+                    <div class="w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center mb-6 text-brand-accent text-xl"><i class="fas fa-gem"></i></div>
+                    <p class="text-gray-700 font-medium">Що таке внутрішня опора і як її знайти.</p>
+                </div>
+                <div class="bg-brand-bg p-8 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section">
+                    <div class="w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center mb-6 text-brand-accent text-xl"><i class="fas fa-shoe-prints"></i></div>
+                    <p class="text-gray-700 font-medium">Як перейти від "мене не чують" до "мене обирають" — конкретні кроки.</p>
+                </div>
+                <div class="bg-brand-bg p-8 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section">
+                    <div class="w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center mb-6 text-brand-accent text-xl"><i class="fas fa-magic"></i></div>
+                    <p class="text-gray-700 font-medium">Проста техніка, яка допоможе відчути себе жінкою вже за 10 хвилин.</p>
+                </div>
+                <div class="bg-brand-bg p-8 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section">
+                    <div class="w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center mb-6 text-brand-accent text-xl"><i class="fas fa-heart"></i></div>
+                    <p class="text-gray-700 font-medium">Що відбувається у стосунках, коли ти виходиш зі стану тривоги — реальні приклади.</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 fade-in-section">
+                <button onclick="openModal()" class="btn-glow bg-brand-accent text-white px-8 py-4 rounded-full text-lg font-medium shadow-lg hover:bg-amber-600 transition-all">
+                    Отримати доступ до відео
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transformation Block -->
+    <section class="py-20 bg-brand-dark text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-brand-accent/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-accent/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="container mx-auto px-6 lg:px-12 relative z-10">
+            <h2 class="font-serif text-3xl lg:text-4xl text-center mb-4 fade-in-section">Що змінюється, коли ти виходиш зі стану тривоги?</h2>
+            <p class="text-center text-gray-300 mb-12 fade-in-section">І знаходиш внутрішню опору</p>
+
+            <div class="max-w-4xl mx-auto space-y-4">
+                <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-all fade-in-section">
+                    <i class="fas fa-check-circle text-brand-accent text-2xl mt-1"></i>
+                    <p class="text-lg text-gray-200">Ти притягуєш чоловіків, які тебе цінують, а не використовують.</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-all fade-in-section">
+                    <i class="fas fa-check-circle text-brand-accent text-2xl mt-1"></i>
+                    <p class="text-lg text-gray-200">Ти стаєш жіночною і більш м’якою.</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-all fade-in-section">
+                    <i class="fas fa-check-circle text-brand-accent text-2xl mt-1"></i>
+                    <p class="text-lg text-gray-200">Ти говориш "ні" без почуття провини.</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-all fade-in-section">
+                    <i class="fas fa-check-circle text-brand-accent text-2xl mt-1"></i>
+                    <p class="text-lg text-gray-200">Ти не боїшся залишитися сама.</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-all fade-in-section">
+                    <i class="fas fa-check-circle text-brand-accent text-2xl mt-1"></i>
+                    <p class="text-lg text-gray-200">Перестаєш “тягнути все на собі” і починаєш жити жіночно.</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 fade-in-section">
+                <button onclick="openModal()" class="btn-glow bg-brand-accent text-white px-10 py-4 rounded-full text-lg font-medium shadow-lg hover:bg-amber-600 transition-all">
+                    Дізнатись всі подробиці
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Author Block -->
+    <section class="py-20 bg-brand-bg">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                
+                <div class="w-full lg:w-1/2 flex justify-center order-2 lg:order-1 fade-in-section">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-brand-accent/20 rounded-tl-[80px] rounded-br-[80px] transform -translate-x-4 -translate-y-4"></div>
+                        <img src="IMG_9303.JPG" 
+                             onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=988&auto=format&fit=crop'"
+                             alt="Ілона" 
+                             class="relative rounded-tl-[80px] rounded-br-[80px] shadow-xl w-full max-w-md object-cover h-[500px] lg:h-[650px] z-10">
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 order-1 lg:order-2 fade-in-section">
+                    <h2 class="font-serif text-3xl lg:text-4xl mb-8">Хто я?</h2>
+                    
+                    <div class="space-y-6 text-gray-700 leading-relaxed text-lg">
+                        <p><span class="font-bold text-brand-dark">Привіт, я Ілона.</span> Жінка, яка жила і будувала бізнес у двох країнах, яка пройшла тяжку хворобу і розлучення без підтримки.</p>
+                        
+                        <p>І паралельно була <span class="bg-brand-accent/20 px-1">більше 10 років у глибинній психотерапії</span>, розстановках, тілесних практиках і роботі з жінками.</p>
+                        
+                        <p class="italic border-l-4 border-brand-accent pl-4 text-gray-600">
+                            "Я знаю, як це бути у стосунках, де тебе не бачать. Я знаю, як це прокидатись вранці після розлучення і будувати себе заново. Як це носити маску “все добре”, бо не можна здатись. Бо є дитина. Бо робота. Бо світ не чекає."
+                        </p>
+                        
+                        <p>Я поєднала особистий досвід і професійне розуміння, щоб створити для вас це відео, який справді працює.</p>
+                    </div>
+
+                    <div class="mt-10">
+                        <button onclick="openModal()" class="btn-glow bg-brand-dark text-white px-8 py-4 rounded-full text-lg font-medium shadow-xl hover:shadow-2xl hover:bg-black transition-all">
+                            Отримати доступ до відео
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section (CAROUSEL WITH CONTROLS) -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 lg:px-12 relative">
+            <h2 class="font-serif text-3xl lg:text-4xl text-center mb-12 fade-in-section">ВІДГУКИ</h2>
+            <p class="text-center text-gray-400 mb-8 fade-in-section lg:hidden text-sm">Гортайте вправо <i class="fas fa-chevron-right text-xs"></i></p>
+            
+            <!-- Controls for PC -->
+            <div class="hidden lg:flex justify-end gap-4 mb-4">
+                <button onclick="scrollReviews('left')" class="w-12 h-12 rounded-full border border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-white transition-all flex items-center justify-center">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button onclick="scrollReviews('right')" class="w-12 h-12 rounded-full border border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-white transition-all flex items-center justify-center">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- Carousel Container -->
+            <div id="reviews-container" class="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory hide-scroll fade-in-section">
+                
+                <!-- Review 1 -->
+                <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between h-auto">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-brand-accent/20 rounded-full flex items-center justify-center text-brand-accent font-bold">К</div>
+                            <div>
+                                <p class="font-bold text-sm">Катерина</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            @ilonasoldatiuk дякую за чудовий вступ! Ви неймовірна 🤗. Нехай все в подальшому буде в легкості і радості 💖
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                        Ілона, дякую за такий вечір. Ви неймовірна жінка. Вас можна слухати до ранку. Така щира і жива.
+                        В мене було купа запитань на ефір, але так все від вас чітко і класно, що навіть не було потреби питати.
+                    </p>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                        В карті бажань на початку року 2025 було заплановано круте навчання по саморозвитку і тут опа 😘. Дякую Богу і Всесвіту, що Ви зустрілись мені.
+                    </p>
+                    <p class="text-brand-dark font-medium text-sm">
+                        Відчуваю в собі великі зміни після курсу і шикарне життя.
+                    </p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        Я дуже дуже Вам вдячна і за цей влучний розбір і за нашу розмову, це мене дуже надихнуло і Ви мені дуже допомогли, саме у цей період я потребувала поштовху і почути ті слова, які боялася сказати собі. Я щиро вдячна, Ви наче заглянули в душу і дали м'який пинок і підтримку одночасно. Це дуже цінно для мене ❤️❤️❤️
+                    </p>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                        Ілона, хочу щиро подякувати вам за вашу роботу! Вчора була на побаченні і вперше відчула себе зовсім по-іншому — у гармонії з собою, з власною жіночою силою та цінністю.
+                    </p>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                        Раніше я часто підлаштовувалася під чоловіків... А зараз, завдяки вашим практикам, я відчула чітку, впевнену позицію.
+                    </p>
+                    <p class="text-brand-accent font-medium text-sm">
+                        Ваша робота справді змінює життя, і я надзвичайно вдячна за це!
+                    </p>
+                </div>
+
+                <!-- Review 5 -->
+                <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                        Я користуюсь порадами Ілони у моїх із чоловіком стосунках 5 місяців і бачу що вони працюють. Я змінюю моє ставлення до себе, проговорюю в голос те що мені не Ок. Бачу що і ставлення чоловіка до мене змінилось на краще.
+                    </p>
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        Ілона, я щиро вдячна Вам за Ваші поради і чекаю на більш розширений, великий курс ❤️
+                    </p>
+                </div>
+
+                <!-- Review 6 -->
+                <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
+                     <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-brand-accent/20 rounded-full flex items-center justify-center text-brand-accent font-bold">А</div>
+                        <div>
+                            <p class="font-bold text-sm">Анастасія</p>
+                            <p class="text-xs text-gray-500 font-medium bg-white px-2 py-0.5 rounded border border-gray-200">Клієнт курсу</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        В мене питання багато, після кожного модулю в голові буря, але оці ваші відповіді складають класно правильний 🧩. Дякую, за вашу роботу і за те, що ви є ❤️
+                    </p>
+                </div>
+
+                <!-- Review 7 -->
+                <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                        Любов до себе та egoїзм часто плутала поняття, тепер трохи розвиднялося)
+                    </p>
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        Дуже цінна інформація, і справні дуже цікаво) в дуже потрібна, дякую ❤️
+                    </p>
+                </div>
+                 <!-- Review 8 -->
+                 <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <p class="text-gray-700 text-sm leading-relaxed">
+                        Дякую за нагадування про себе 😀 Ваші уроки неймовірні. Я зараз їх переслуховую і просто інсайди відкриваю, ті яких я не зрозуміла місяць тому коли перший раз їх слухала. Тому дуже вдячна за вашу працю.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white py-20 text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="font-serif text-3xl lg:text-4xl mb-6 fade-in-section">Ти можеш вийти зі стану тривоги та самознецінення</h2>
+            <p class="text-xl text-brand-accent mb-10 fade-in-section">Почни з безкоштовного відео вже сьогодні</p>
+            
+            <button onclick="openModal()" class="btn-glow bg-white text-brand-dark px-10 py-5 rounded-full text-lg font-bold shadow-2xl hover:bg-gray-100 transition-all fade-in-section">
+                Отримати доступ до відео
+            </button>
+            
+            <div class="mt-16 text-gray-500 text-sm">
+                &copy; 2026 Ilona. Всі права захищені.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-4">
+            <div class="bg-white rounded-2xl shadow-2xl p-8 relative animate-bounce-in">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+
+                <div class="text-center mb-6">
+                    <h3 class="font-serif text-2xl mb-2 text-brand-dark">Відкрити доступ</h3>
+                    <p class="text-sm text-gray-500">Введіть свої дані, щоб ми надіслали вам відео</p>
+                </div>
+
+                <form action="#" onsubmit="event.preventDefault(); submitForm();" class="space-y-4">
+                    <div>
+                        <input type="text" placeholder="Ваше ім'я" required 
+                               class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/20 outline-none transition-all bg-gray-50">
+                    </div>
+                    <div>
+                        <input type="email" placeholder="Ваш Email" required 
+                               class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/20 outline-none transition-all bg-gray-50">
+                    </div>
+                    <button type="submit" class="w-full bg-brand-dark text-white py-4 rounded-lg font-medium hover:bg-black transition-all shadow-lg">
+                        Дивитись відео
+                    </button>
+                </form>
+                
+                <p class="text-xs text-center text-gray-400 mt-4">🔒 Ваші дані в безпеці і не будуть передані третім особам</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Modal logic
+        const modal = document.getElementById('modal');
+        function openModal() {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        function submitForm() {
+            const btn = document.querySelector('form button');
+            const originalText = btn.innerText;
+            btn.innerText = 'Завантаження...';
+            btn.disabled = true;
+            setTimeout(() => {
+                alert("Дякую! Зараз відкриється відео.");
+                // Redirect here
+                closeModal();
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }, 1000);
+        }
+
+        // Reviews Scroll Logic (Controls for PC)
+        function scrollReviews(direction) {
+            const container = document.getElementById('reviews-container');
+            const scrollAmount = 400; // Width of one card
+            if (direction === 'left') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // Animation on scroll
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in-section').forEach(section => observer.observe(section));
+        });
+    </script>
+
+</body>
+</html>
