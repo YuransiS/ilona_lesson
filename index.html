@@ -58,7 +58,6 @@
         }
         .btn-glow:hover::after { left: 100%; transition: 0.7s ease-in-out; }
 
-        /* Скрытие скроллбара */
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -82,14 +81,13 @@
                     
                     <p class="text-xl lg:text-2xl text-gray-600 mb-6 font-light">Всього за 1 відео</p>
 
-                    <!-- ФОТО ДЛЯ МОБИЛЬНОГО (ПРАВКА №1: Между заголовком и описанием) -->
+                    <!-- ФОТО ДЛЯ МОБИЛЬНОГО -->
                     <div class="block lg:hidden mb-8">
                         <img src="IMG_9299.JPG" 
                              onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=988&auto=format&fit=crop'" 
                              alt="Ілона" 
                              class="w-full rounded-[40px] shadow-xl object-cover h-[450px]">
                     </div>
-                    <!-- Конец фото для мобильного -->
 
                     <p class="text-gray-600 mb-8 leading-relaxed">
                         Отримай доступ до безкоштовного відео, де я розкрию реальний шлях до внутрішньої опори, жіночої легкості та стосунків, де тебе цінують.
@@ -125,43 +123,36 @@
             <h2 class="font-serif text-3xl lg:text-4xl text-center mb-16 fade-in-section">Що ви отримаєте у відео?</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- ПРАВКА №2: Flex row для иконки и текста (иконка слева) -->
-                
                 <div class="bg-brand-bg p-6 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section flex items-start gap-4">
                     <div class="shrink-0 w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center text-brand-accent text-xl">
                         <i class="fas fa-unlock"></i>
                     </div>
                     <p class="text-gray-700 font-medium pt-1">Чому ти застрягла у стані тривоги і самознецінення, і що насправді блокує зміни.</p>
                 </div>
-
                 <div class="bg-brand-bg p-6 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section flex items-start gap-4">
                     <div class="shrink-0 w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center text-brand-accent text-xl">
                         <i class="fas fa-exclamation-triangle"></i>
                     </div>
                     <p class="text-gray-700 font-medium pt-1">3 головні помилки, які руйнують твою жіночу енергію та відштовхують чоловіків.</p>
                 </div>
-
                 <div class="bg-brand-bg p-6 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section flex items-start gap-4">
                     <div class="shrink-0 w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center text-brand-accent text-xl">
                         <i class="fas fa-gem"></i>
                     </div>
                     <p class="text-gray-700 font-medium pt-1">Що таке внутрішня опора і як її знайти.</p>
                 </div>
-
                 <div class="bg-brand-bg p-6 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section flex items-start gap-4">
                     <div class="shrink-0 w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center text-brand-accent text-xl">
                         <i class="fas fa-shoe-prints"></i>
                     </div>
                     <p class="text-gray-700 font-medium pt-1">Як перейти від "мене не чують" до "мене обирають" — конкретні кроки.</p>
                 </div>
-
                 <div class="bg-brand-bg p-6 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section flex items-start gap-4">
                     <div class="shrink-0 w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center text-brand-accent text-xl">
                         <i class="fas fa-magic"></i>
                     </div>
                     <p class="text-gray-700 font-medium pt-1">Проста техніка, яка допоможе відчути себе жінкою вже за 10 хвилин.</p>
                 </div>
-
                 <div class="bg-brand-bg p-6 rounded-2xl shadow-sm hover:shadow-md transition-all fade-in-section flex items-start gap-4">
                     <div class="shrink-0 w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center text-brand-accent text-xl">
                         <i class="fas fa-heart"></i>
@@ -184,7 +175,6 @@
         <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-accent/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
 
         <div class="container mx-auto px-6 lg:px-12 relative z-10">
-            <!-- ПРАВКА №3: Объединенный заголовок -->
             <h2 class="font-serif text-2xl lg:text-4xl text-center mb-12 fade-in-section leading-normal">
                 Що змінюється, коли ти виходиш зі стану тривоги і знаходиш внутрішню опору?
             </h2>
@@ -220,14 +210,29 @@
         </div>
     </section>
 
-    <!-- Author Block -->
+    <!-- Author Block (Who am I?) -->
     <section class="py-20 bg-brand-bg">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="flex flex-col lg:flex-row items-center gap-12">
+            <div class="flex flex-col lg:flex-row gap-12 lg:items-center">
                 
-                <!-- ТЕКСТ (на моб идет первым) -->
-                <div class="w-full lg:w-1/2 order-1 lg:order-2 fade-in-section">
+                <!-- 
+                   ЛЕВАЯ КОЛОНКА (ТЕКСТ + ФОТО "КОЛИСЬ")
+                -->
+                <div class="w-full lg:w-1/2 fade-in-section order-1">
                     <h2 class="font-serif text-3xl lg:text-4xl mb-8">Хто я?</h2>
+
+                    <!-- ФОТО 1: Я КОЛИСЬ (Вставка прямо здесь для мобильного и ПК) -->
+                    <div class="mb-8 flex flex-col items-start">
+                        <div class="relative transform rotate-[-3deg] w-48 lg:w-56 aspect-[3/4] overflow-hidden rounded-lg shadow-md bg-white p-2">
+                             <!-- Внутренний контейнер для фото с рамкой а-ля полароид -->
+                             <img src="IMG_8213.JPG" 
+                                  onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=988&auto=format&fit=crop&sat=-100'"
+                                  alt="Ілона колись" 
+                                  class="w-full h-full object-cover grayscale-[30%] sepia-[30%] rounded-sm">
+                        </div>
+                        <p class="mt-3 ml-4 font-serif italic text-gray-500 text-lg">я колись</p>
+                    </div>
+                    <!-- Конец фото 1 -->
                     
                     <div class="space-y-6 text-gray-700 leading-relaxed text-lg">
                         <p><span class="font-bold text-brand-dark">Привіт, я Ілона.</span> Жінка, яка жила і будувала бізнес у двох країнах, яка пройшла тяжку хворобу і розлучення без підтримки.</p>
@@ -249,19 +254,22 @@
                     </div>
                 </div>
 
-                <!-- ФОТО (на моб идет вторым) -->
-                <div class="w-full lg:w-1/2 flex justify-center order-2 lg:order-1 fade-in-section">
-                    <div class="relative">
+                <!-- 
+                   ПРАВАЯ КОЛОНКА (ФОТО "ЗАРАЗ")
+                -->
+                <div class="w-full lg:w-1/2 flex flex-col items-center order-2 fade-in-section">
+                    <div class="relative w-full max-w-md">
                         <div class="absolute inset-0 bg-brand-accent/20 rounded-tl-[80px] rounded-br-[80px] transform -translate-x-4 -translate-y-4"></div>
                         <img src="IMG_9303.JPG" 
                              onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=988&auto=format&fit=crop'"
-                             alt="Ілона" 
-                             class="relative rounded-tl-[80px] rounded-br-[80px] shadow-xl w-full max-w-md object-cover h-[500px] lg:h-[650px] z-10">
+                             alt="Ілона зараз" 
+                             class="relative rounded-tl-[80px] rounded-br-[80px] shadow-xl w-full object-cover h-[500px] lg:h-[650px] z-10">
                     </div>
+                    <p class="mt-4 font-serif italic text-brand-accent text-xl font-bold">я зараз</p>
                 </div>
 
-                <!-- Кнопка только для МОБИЛЬНОГО (идет третьей, после фото) -->
-                <div class="w-full order-3 lg:hidden mt-6">
+                <!-- Кнопка только для МОБИЛЬНОГО (идет третьей) -->
+                <div class="w-full order-3 lg:hidden mt-2">
                      <button onclick="openModal()" class="w-full btn-glow bg-brand-dark text-white px-8 py-4 rounded-full text-lg font-medium shadow-xl hover:shadow-2xl hover:bg-black transition-all">
                         Отримати доступ до відео
                     </button>
