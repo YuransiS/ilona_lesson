@@ -8,6 +8,9 @@
     <!-- Подключение Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- CSS для телефонного ввода (intl-tel-input) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+    
     <!-- Шрифты Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,9 +25,9 @@
             theme: {
                 extend: {
                     colors: {
-                        'brand-bg': '#FDFBF7', // Очень светлый бежевый фон
-                        'brand-accent': '#D4A373', // Золотисто-бежевый
-                        'brand-dark': '#2C2520', // Темный шоколад для текста
+                        'brand-bg': '#FDFBF7',
+                        'brand-accent': '#D4A373',
+                        'brand-dark': '#2C2520',
                         'brand-light': '#FAEDCD',
                     },
                     fontFamily: {
@@ -60,6 +63,30 @@
 
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Стилизация инпута телефона под дизайн */
+        .iti { width: 100%; }
+        .iti__flag { background-image: url("https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/img/flags.png"); }
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+          .iti__flag { background-image: url("https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/img/flags@2x.png"); }
+        }
+        
+        /* Кастомное уведомление (Toast) */
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        .toast {
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out, opacity 0.4s;
+            opacity: 0;
+        }
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-brand-bg text-brand-dark font-sans antialiased overflow-x-hidden">
@@ -210,21 +237,18 @@
         </div>
     </section>
 
-    <!-- Author Block (Who am I?) -->
+    <!-- Author Block -->
     <section class="py-20 bg-brand-bg">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="flex flex-col lg:flex-row gap-12 lg:items-center">
                 
-                <!-- 
-                   ЛЕВАЯ КОЛОНКА (ТЕКСТ + ФОТО "КОЛИСЬ")
-                -->
+                <!-- ЛЕВАЯ КОЛОНКА -->
                 <div class="w-full lg:w-1/2 fade-in-section order-1">
                     <h2 class="font-serif text-3xl lg:text-4xl mb-8">Хто я?</h2>
 
-                    <!-- ФОТО 1: Я КОЛИСЬ (Вставка прямо здесь для мобильного и ПК) -->
+                    <!-- ФОТО 1: Я КОЛИСЬ -->
                     <div class="mb-8 flex flex-col items-start">
                         <div class="relative transform rotate-[-3deg] w-48 lg:w-56 aspect-[3/4] overflow-hidden rounded-lg shadow-md bg-white p-2">
-                             <!-- Внутренний контейнер для фото с рамкой а-ля полароид -->
                              <img src="IMG_8213.JPG" 
                                   onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=988&auto=format&fit=crop&sat=-100'"
                                   alt="Ілона колись" 
@@ -232,7 +256,6 @@
                         </div>
                         <p class="mt-3 ml-4 font-serif italic text-gray-500 text-lg">я колись</p>
                     </div>
-                    <!-- Конец фото 1 -->
                     
                     <div class="space-y-6 text-gray-700 leading-relaxed text-lg">
                         <p><span class="font-bold text-brand-dark">Привіт, я Ілона.</span> Жінка, яка жила і будувала бізнес у двох країнах, яка пройшла тяжку хворобу і розлучення без підтримки.</p>
@@ -246,7 +269,7 @@
                         <p>Я поєднала особистий досвід і професійне розуміння, щоб створити для вас це відео, який справді працює.</p>
                     </div>
 
-                    <!-- Кнопка только для ПК (на моб скрыта) -->
+                    <!-- Кнопка только для ПК -->
                     <div class="mt-10 hidden lg:block">
                         <button onclick="openModal()" class="btn-glow bg-brand-dark text-white px-8 py-4 rounded-full text-lg font-medium shadow-xl hover:shadow-2xl hover:bg-black transition-all">
                             Отримати доступ до відео
@@ -254,9 +277,7 @@
                     </div>
                 </div>
 
-                <!-- 
-                   ПРАВАЯ КОЛОНКА (ФОТО "ЗАРАЗ")
-                -->
+                <!-- ПРАВАЯ КОЛОНКА (ФОТО "ЗАРАЗ") -->
                 <div class="w-full lg:w-1/2 flex flex-col items-center order-2 fade-in-section">
                     <div class="relative w-full max-w-md">
                         <div class="absolute inset-0 bg-brand-accent/20 rounded-tl-[80px] rounded-br-[80px] transform -translate-x-4 -translate-y-4"></div>
@@ -268,7 +289,7 @@
                     <p class="mt-4 font-serif italic text-brand-accent text-xl font-bold">я зараз</p>
                 </div>
 
-                <!-- Кнопка только для МОБИЛЬНОГО (идет третьей) -->
+                <!-- Кнопка только для МОБИЛЬНОГО -->
                 <div class="w-full order-3 lg:hidden mt-2">
                      <button onclick="openModal()" class="w-full btn-glow bg-brand-dark text-white px-8 py-4 rounded-full text-lg font-medium shadow-xl hover:shadow-2xl hover:bg-black transition-all">
                         Отримати доступ до відео
@@ -285,7 +306,6 @@
             <h2 class="font-serif text-3xl lg:text-4xl text-center mb-12 fade-in-section">ВІДГУКИ</h2>
             <p class="text-center text-gray-400 mb-8 fade-in-section lg:hidden text-sm">Гортайте вправо <i class="fas fa-chevron-right text-xs"></i></p>
             
-            <!-- Controls for PC -->
             <div class="hidden lg:flex justify-end gap-4 mb-4">
                 <button onclick="scrollReviews('left')" class="w-12 h-12 rounded-full border border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-white transition-all flex items-center justify-center">
                     <i class="fas fa-chevron-left"></i>
@@ -297,8 +317,7 @@
 
             <!-- Carousel Container -->
             <div id="reviews-container" class="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory hide-scroll fade-in-section">
-                
-                <!-- Review 1 -->
+                <!-- Отзывы те же -->
                 <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between h-auto">
                     <div>
                         <div class="flex items-center gap-3 mb-4">
@@ -313,22 +332,17 @@
                     </div>
                 </div>
 
-                <!-- Review 2 -->
                 <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
                     <p class="text-gray-700 text-sm leading-relaxed mb-4">
                         Ілона, дякую за такий вечір. Ви неймовірна жінка. Вас можна слухати до ранку. Така щира і жива.
                         В мене було купа запитань на ефір, але так все від вас чітко і класно, що навіть не було потреби питати.
                     </p>
-                    <p class="text-gray-700 text-sm leading-relaxed mb-4">
-                        В карті бажань на початку року 2025 було заплановано круте навчання по саморозвитку і тут опа 😘. Дякую Богу і Всесвіту, що Ви зустрілись мені.
-                    </p>
                     <p class="text-brand-dark font-medium text-sm">
                         Відчуваю в собі великі зміни після курсу і шикарне життя.
                     </p>
                 </div>
-
-                <!-- Review 3 -->
-                <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
+                 <!-- Review 3 -->
+                 <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
                     <p class="text-gray-700 text-sm leading-relaxed">
                         Я дуже дуже Вам вдячна і за цей влучний розбір і за нашу розмову, це мене дуже надихнуло і Ви мені дуже допомогли, саме у цей період я потребувала поштовху і почути ті слова, які боялася сказати собі. Я щиро вдячна, Ви наче заглянули в душу і дали м'який пинок і підтримку одночасно. Це дуже цінно для мене ❤️❤️❤️
                     </p>
@@ -338,9 +352,6 @@
                 <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
                     <p class="text-gray-700 text-sm leading-relaxed mb-3">
                         Ілона, хочу щиро подякувати вам за вашу роботу! Вчора була на побаченні і вперше відчула себе зовсім по-іншому — у гармонії з собою, з власною жіночою силою та цінністю.
-                    </p>
-                    <p class="text-gray-700 text-sm leading-relaxed mb-3">
-                        Раніше я часто підлаштовувалася під чоловіків... А зараз, завдяки вашим практикам, я відчула чітку, впевнену позицію.
                     </p>
                     <p class="text-brand-accent font-medium text-sm">
                         Ваша робота справді змінює життя, і я надзвичайно вдячна за це!
@@ -356,37 +367,6 @@
                         Ілона, я щиро вдячна Вам за Ваші поради і чекаю на більш розширений, великий курс ❤️
                     </p>
                 </div>
-
-                <!-- Review 6 -->
-                <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
-                     <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 bg-brand-accent/20 rounded-full flex items-center justify-center text-brand-accent font-bold">А</div>
-                        <div>
-                            <p class="font-bold text-sm">Анастасія</p>
-                            <p class="text-xs text-gray-500 font-medium bg-white px-2 py-0.5 rounded border border-gray-200">Клієнт курсу</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        В мене питання багато, після кожного модулю в голові буря, але оці ваші відповіді складають класно правильний 🧩. Дякую, за вашу роботу і за те, що ви є ❤️
-                    </p>
-                </div>
-
-                <!-- Review 7 -->
-                <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
-                    <p class="text-gray-700 text-sm leading-relaxed mb-3">
-                        Любов до себе та egoїзм часто плутала поняття, тепер трохи розвиднялося)
-                    </p>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        Дуже цінна інформація, і справні дуже цікаво) в дуже потрібна, дякую ❤️
-                    </p>
-                </div>
-                 <!-- Review 8 -->
-                 <div class="min-w-[300px] md:min-w-[400px] snap-center bg-brand-bg p-8 rounded-2xl shadow-sm border border-gray-100">
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        Дякую за нагадування про себе 😀 Ваші уроки неймовірні. Я зараз їх переслуховую і просто інсайди відкриваю, ті яких я не зрозуміла місяць тому коли перший раз їх слухала. Тому дуже вдячна за вашу працю.
-                    </p>
-                </div>
-
             </div>
         </div>
     </section>
@@ -423,12 +403,12 @@
 
                 <form action="#" onsubmit="event.preventDefault(); submitForm();" class="space-y-4">
                     <div>
-                        <input type="text" placeholder="Ваше ім'я" required 
+                        <input type="text" id="user_name" placeholder="Ваше ім'я" required 
                                class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/20 outline-none transition-all bg-gray-50">
                     </div>
                     <div>
-                        <input type="email" placeholder="Ваш Email" required 
-                               class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/20 outline-none transition-all bg-gray-50">
+                        <!-- Поле телефона (Инициализируется JS) -->
+                        <input type="tel" id="user_phone" class="w-full px-4 py-3 rounded-lg border border-gray-200 outline-none transition-all bg-gray-50">
                     </div>
                     <button type="submit" class="w-full bg-brand-dark text-white py-4 rounded-lg font-medium hover:bg-black transition-all shadow-lg">
                         Дивитись відео
@@ -440,28 +420,101 @@
         </div>
     </div>
 
+    <!-- Notification Container -->
+    <div id="toast-container"></div>
+
     <!-- Scripts -->
+    <!-- Подключаем скрипт для телефона -->
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
     <script>
         const modal = document.getElementById('modal');
+        let iti; // Переменная для инстанса intlTelInput
+
+        // Инициализация поля телефона
+        function initPhoneInput() {
+            const input = document.querySelector("#user_phone");
+            if (input) {
+                iti = window.intlTelInput(input, {
+                    initialCountry: "ua", // По умолчанию Украина
+                    excludeCountries: ["ru", "by"], // Исключаем РФ и РБ
+                    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+                    separateDialCode: true, // Код страны отдельно
+                    allowDropdown: true
+                });
+            }
+        }
+
+        // Вызов инициализации при загрузке страницы
+        document.addEventListener("DOMContentLoaded", function() {
+            initPhoneInput();
+        });
+
         function openModal() {
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
+
         function closeModal() {
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
+
+        // Функция показа красивого уведомления (Toast)
+        function showNotification(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            // Стили в зависимости от типа
+            let bgClass = type === 'success' ? 'bg-green-600' : 'bg-red-500';
+            let iconClass = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+
+            toast.className = `toast show flex items-center gap-3 px-6 py-4 rounded-lg shadow-2xl text-white mb-3 min-w-[300px] ${bgClass}`;
+            toast.innerHTML = `
+                <i class="fas ${iconClass} text-xl"></i>
+                <span class="font-medium">${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            // Удаление через 3 секунды
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400); // Ждем завершения анимации
+            }, 3000);
+        }
+
         function submitForm() {
+            const nameInput = document.getElementById('user_name');
             const btn = document.querySelector('form button');
             const originalText = btn.innerText;
+
+            // Валидация имени
+            if (!nameInput.value.trim()) {
+                showNotification('Будь ласка, введіть ваше ім\'я', 'error');
+                return;
+            }
+
+            // Валидация телефона через библиотеку
+            if (!iti.isValidNumber()) {
+                showNotification('Введіть коректний номер телефону', 'error');
+                return;
+            }
+
+            const phoneNumber = iti.getNumber(); // Получаем полный номер (+380...)
+
+            // Имитация отправки
             btn.innerText = 'Завантаження...';
             btn.disabled = true;
+
             setTimeout(() => {
-                alert("Дякую! Зараз відкриється відео.");
+                showNotification(`Вітаємо, ${nameInput.value}! Відео відкрито.`, 'success');
                 // Redirect here
                 closeModal();
                 btn.innerText = originalText;
                 btn.disabled = false;
+                
+                // Здесь можно редиректить на видео
+                // window.location.href = "ССЫЛКА_НА_ВИДЕО";
             }, 1000);
         }
 
@@ -491,4 +544,3 @@
 
 </body>
 </html>
-
