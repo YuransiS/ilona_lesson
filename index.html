@@ -483,10 +483,13 @@
             }, 3000);
         }
 
-        function submitForm() {
+            function submitForm() {
             const nameInput = document.getElementById('user_name');
             const btn = document.querySelector('form button');
             const originalText = btn.innerText;
+            
+            // 1. Вставь сюда ссылку, которую ты скопировал в Google Apps Script
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyLNQ8uYRKl57ZpVWYrWZ-yIJOmKPFZDHUXyKX0gAGfv2YBesxMhrmh56DukZU2Ls3_Sg/exec';
 
             // Валидация имени
             if (!nameInput.value.trim()) {
@@ -501,21 +504,44 @@
             }
 
             const phoneNumber = iti.getNumber(); // Получаем полный номер (+380...)
+            const userName = nameInput.value;
 
-            // Имитация отправки
-            btn.innerText = 'Завантаження...';
+            // Визуализация загрузки
+            btn.innerText = 'Відправка...';
             btn.disabled = true;
 
-            setTimeout(() => {
-                showNotification(`Вітаємо, ${nameInput.value}! Відео відкрито.`, 'success');
-                // Redirect here
-                closeModal();
+            // Отправка данных в Google Таблицу
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors', // Важно для работы с Google Script без ошибок в браузере
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: userName, phone: phoneNumber })
+            })
+            .then(response => {
+                // Успех
+                showNotification(`Вітаємо, ${userName}! Відео відкрито.`, 'success');
+                
+                setTimeout(() => {
+                    closeModal();
+                    // Сброс формы
+                    nameInput.value = '';
+                    iti.setNumber('');
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+
+                    // ПЕРЕАДРЕСАЦИЯ НА ВИДЕО (Замени # на ссылку YouTube)
+                    window.location.href = "#"; 
+                }, 1500);
+            })
+            .catch(error => {
+                // Ошибка (редко, но бывает)
+                console.error('Error!', error.message);
+                showNotification('Сталася помилка. Спробуйте ще раз.', 'error');
                 btn.innerText = originalText;
                 btn.disabled = false;
-                
-                // Здесь можно редиректить на видео
-                window.location.href = "https://t.me/ilona_soldatiuk_bot?start=696a27587b542cce73092dc3";
-            }, 1000);
+            });
         }
 
         function scrollReviews(direction) {
@@ -544,5 +570,6 @@
 
 </body>
 </html>
+
 
 
