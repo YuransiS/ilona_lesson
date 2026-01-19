@@ -500,69 +500,70 @@
             }, 3000);
         }
 
-            function submitForm() {
+function submitForm() {
             const nameInput = document.getElementById('user_name');
             const btn = document.querySelector('form button');
             const originalText = btn.innerText;
             
-            // 1. Вставь сюда ссылку, которую ты скопировал в Google Apps Script
+            // ВАШ СКРИПТ (перевірте, чи посилання актуальне)
             const scriptURL = 'https://script.google.com/macros/s/AKfycbyLNQ8uYRKl57ZpVWYrWZ-yIJOmKPFZDHUXyKX0gAGfv2YBesxMhrmh56DukZU2Ls3_Sg/exec';
 
-            // Валидация имени
             if (!nameInput.value.trim()) {
                 showNotification('Будь ласка, введіть ваше ім\'я', 'error');
                 return;
             }
 
-            // Валидация телефона через библиотеку
             if (!iti.isValidNumber()) {
                 showNotification('Введіть коректний номер телефону', 'error');
                 return;
             }
 
-            const phoneNumber = iti.getNumber(); // Получаем полный номер (+380...)
+            const phoneNumber = iti.getNumber();
             const userName = nameInput.value;
 
-            // Визуализация загрузки
+            // --- НОВЕ: Функція для отримання UTM ---
+            function getParam(p) {
+                const match = RegExp('[?&]' + p + '=([^&]*)').exec(window.location.search);
+                return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+            }
+            // ---------------------------------------
+
             btn.innerText = 'Відправка...';
             btn.disabled = true;
 
-            // Отправка данных в Google Таблицу
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors', // Важно для работы с Google Script без ошибок в браузере
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     name: userName, 
                     phone: phoneNumber,
-                    sheetName: "Урок",       // Це створить вкладку "Урок"
-                    price: "Безкоштовно"     // Вказуємо, що це фрі
+                    sheetName: "Урок",
+                    price: "Безкоштовно",
+                    // Додаємо UTM мітки
+                    utm_source: getParam('utm_source') || '',
+                    utm_medium: getParam('utm_medium') || '',
+                    utm_campaign: getParam('utm_campaign') || '',
+                    utm_content: getParam('utm_content') || '', // Це зазвичай креатив
+                    utm_term: getParam('utm_term') || ''
                 })
             })
             .then(response => {
-                // Успех
                 showNotification(`Вітаємо, ${userName}! Відео відкрито.`, 'success');
                 
-                if (typeof fbq === 'function') {
-                    fbq('track', 'Lead'); 
-                }
+                if (typeof fbq === 'function') { fbq('track', 'Lead'); }
                 
                 setTimeout(() => {
                     closeModal();
-                    // Сброс формы
                     nameInput.value = '';
                     iti.setNumber('');
                     btn.innerText = originalText;
                     btn.disabled = false;
-
-                    // ПЕРЕАДРЕСАЦИЯ НА ВИДЕО (Замени # на ссылку YouTube)
+                    // Перехід на бота
                     window.location.href = "https://t.me/ilona_soldatiuk_bot?start=696a27587b542cce73092dc3"; 
                 }, 1500);
             })
             .catch(error => {
-                // Ошибка (редко, но бывает)
                 console.error('Error!', error.message);
                 showNotification('Сталася помилка. Спробуйте ще раз.', 'error');
                 btn.innerText = originalText;
@@ -596,6 +597,7 @@
 
 </body>
 </html>
+
 
 
 
